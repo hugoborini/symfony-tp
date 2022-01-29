@@ -49,9 +49,15 @@ class UserProfile
      */
     private $adsId;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="userId", orphanRemoval=true)
+     */
+    private $commentId;
+
     public function __construct()
     {
         $this->adsId = new ArrayCollection();
+        $this->commentId = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -143,6 +149,36 @@ class UserProfile
             // set the owning side to null (unless already changed)
             if ($adsId->getUserID() === $this) {
                 $adsId->setUserID(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getCommentId(): Collection
+    {
+        return $this->commentId;
+    }
+
+    public function addCommentId(Comment $commentId): self
+    {
+        if (!$this->commentId->contains($commentId)) {
+            $this->commentId[] = $commentId;
+            $commentId->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentId(Comment $commentId): self
+    {
+        if ($this->commentId->removeElement($commentId)) {
+            // set the owning side to null (unless already changed)
+            if ($commentId->getUserId() === $this) {
+                $commentId->setUserId(null);
             }
         }
 

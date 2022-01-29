@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\CommentsRepository;
+use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=CommentsRepository::class)
+ * @ORM\Entity(repositoryClass=CommentRepository::class)
  */
-class Comments
+class Comment
 {
     /**
      * @ORM\Id
@@ -28,10 +28,10 @@ class Comments
     private $date;
 
     /**
-     * @ORM\ManyToOne(targetEntity=UserProfile::class)
+     * @ORM\ManyToOne(targetEntity=UserProfile::class, inversedBy="commentId")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $userID;
+    private $userId;
 
     public function getId(): ?int
     {
@@ -62,14 +62,14 @@ class Comments
         return $this;
     }
 
-    public function getUserID(): ?UserProfile
+    public function getUserId(): ?UserProfile
     {
-        return $this->userID;
+        return $this->userId;
     }
 
-    public function setUserID(?UserProfile $userID): self
+    public function setUserId(?UserProfile $userId): self
     {
-        $this->userID = $userID;
+        $this->userId = $userId;
 
         return $this;
     }
