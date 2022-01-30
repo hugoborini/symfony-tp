@@ -1,17 +1,21 @@
 # symfony-tp
 
-### to run : 
+### to run :
 
-##### composer install
 
-&
+```
+composer install
+```
 
-##### symfony serve -d
 
-&
+```
+symfony serve -d
+```
 
-##### php bin/console doctrine:migrations:migrate
+```
+php bin/console doctrine:migrations:migrate
+```
 
-&
-
-##### php bin/console doctrine:fixture:load  
+```
+php bin/console doctrine:fixture:load
+```
