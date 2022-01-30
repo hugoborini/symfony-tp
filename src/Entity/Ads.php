@@ -38,11 +38,6 @@ class Ads
     private $date;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $tag;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $image;
@@ -52,6 +47,12 @@ class Ads
      * @ORM\JoinColumn(nullable=false)
      */
     private $userID;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="adsId")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $categoryID;
 
     public function getId(): ?int
     {
@@ -106,18 +107,6 @@ class Ads
         return $this;
     }
 
-    public function getTag(): ?string
-    {
-        return $this->tag;
-    }
-
-    public function setTag(?string $tag): self
-    {
-        $this->tag = $tag;
-
-        return $this;
-    }
-
     public function getImage(): ?string
     {
         return $this->image;
@@ -138,6 +127,18 @@ class Ads
     public function setUserID(?UserProfile $userID): self
     {
         $this->userID = $userID;
+
+        return $this;
+    }
+
+    public function getCategoryID(): ?Category
+    {
+        return $this->categoryID;
+    }
+
+    public function setCategoryID(?Category $categoryID): self
+    {
+        $this->categoryID = $categoryID;
 
         return $this;
     }

@@ -3,15 +3,17 @@
 {% block title %}annonce de {{ad.userID.username}}{% endblock %}
 
 {% block body %}
-    <h2>{{ad.title}}</h2>
-    <h3>auteur : <a href="{{ path('userpage', {'id_user' : ad.userID.id}) }}" class="card-link">{{ad.userID.username}}</a></h3>
-    <p>{{ad.description}}</p>
+    <div class="container">
+        <h2>{{ad.title}}</h2>
+        <h3>auteur : <a href="{{ path('userpage', {'id_user' : ad.userID.id}) }}" class="card-link">{{ad.userID.username}}</a></h3>
+        <p>{{ad.description}}</p>
 
 
-    {% for image in images %}
-        <img src="{{ asset('image/' ~ id_ad ~ '/' ~ image ) }}" alt="" srcset="">
-    {% endfor %}
+        {% for image in images %}
+            <img src="{{ asset('image/' ~ id_ad ~ '/' ~ image ) }}" alt="" srcset="">
+        {% endfor %}
 
-    <p>prix : {{ad.price}} $</p>
-    <button class="btn btn-lg btn-primary" type="button">acheter</button>
+        <p>prix : {{ad.price}} $</p>
+        <button class="btn btn-lg btn-primary" type="button">acheter</button>
+    </div>
 {% endblock %}

@@ -7,6 +7,7 @@ use Doctrine\Persistence\ObjectManager;
 use App\Entity\Ads;
 use App\Entity\UserProfile;
 use App\Entity\Comment;
+use App\Entity\Category;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Path;
@@ -15,10 +16,26 @@ class AdsFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $roles = ["vendeur", "acheteurs", "admins"];
-        $tags = ["voiture", "electronique", "vetement", "high-tech", "meuble"];
+        $roles = ["user", "admins"];
+
+        $tags = ["Vacances", "Emploi", "Véhicules", "Immobilier", "Mode", "Maison", "Multimédia", "Loisirs", "Animaux", "Matériel Professionnel",
+        "Services",
+        "Divers"];
+        $categoryObjectTab = [];
         $filesystem = new Filesystem();
         $faker = \Faker\Factory::create();
+
+
+        foreach ($tags as $tag) {
+            $category = new Category();
+
+            $category->setCategoryName($tag);
+
+            $manager->persist($category);
+
+            array_push($categoryObjectTab, $category);
+
+        }
 
         for ($i = 0 ; $i < 4; $i++){
             $user = new UserProfile();
@@ -39,7 +56,7 @@ class AdsFixtures extends Fixture
                     ->setDescription($faker->paragraph())
                     ->setPrice($faker->numberBetween(30, 300))
                     ->setDate($faker->dateTimeBetween('-4 week', '+1 week'))
-                    ->setTag($tags[array_rand($tags)])
+                    ->setCategoryID($categoryObjectTab[array_rand($categoryObjectTab)])
                     ->setImage("oui")
                     ->setUserID($user);
 

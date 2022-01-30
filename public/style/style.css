@@ -1,0 +1,26 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    justify-content: center;
+}
+
+.container img{
+    width: 400px;
+    height: auto;
+    margin: auto;
+}
+
+.grid{
+    display: grid;
+	grid-template-columns: repeat( auto-fit, minmax(300px, 1fr) );
+	grid-column-gap: 30px;
+	grid-row-gap: 30px;
+}
+
+.container_ads{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding:5% 20%;
+}
