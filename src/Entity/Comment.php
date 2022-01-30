@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
  */
@@ -70,6 +71,36 @@ class Comment
     public function setUserId(?UserProfile $userId): self
     {
         $this->userId = $userId;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Ads[]
+     */
+    public function getAdsId(): Collection
+    {
+        return $this->adsId;
+    }
+
+    public function addAdsId(Ads $adsId): self
+    {
+        if (!$this->adsId->contains($adsId)) {
+            $this->adsId[] = $adsId;
+            $adsId->setUserID($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdsId(Ads $adsId): self
+    {
+        if ($this->adsId->removeElement($adsId)) {
+            // set the owning side to null (unless already changed)
+            if ($adsId->getUserID() === $this) {
+                $adsId->setUserID(null);
+            }
+        }
 
         return $this;
     }
