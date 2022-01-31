@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Ads;
+use App\Entity\UserProfile;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\UserProfile;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class UserpageController extends AbstractController
 {
@@ -24,5 +26,46 @@ class UserpageController extends AbstractController
             "userInfo" => $userInfo,
             "articles" => $article
         ]);
+    }
+
+    /**
+     * @Route("/myPage", name="myUserpage")
+     */
+    public function myPage(): Response
+    {
+        $userID = $this->getUser()->getId();
+
+        $repo = $this->getDoctrine()->getRepository(UserProfile::class);
+        $userInfo = $repo->find($userID);
+
+        $article = $userInfo->getAdsId();
+
+        return $this->render('userpage/myPage.html.twig',[
+            "userInfo" => $userInfo,
+            "articles" => $article
+        ]);
+    }
+
+    /**
+     * @Route("/myPage/deleteArticle/{idArticle}", name="deleteArticle")
+    */
+    public function deleteArticle(int $idArticle): Response
+    {
+        $repo = $this->getDoctrine()->getRepository(Ads::class);
+        $manager = $this->getDoctrine()->getManager();
+
+        $article = $repo->find($idArticle);
+        $test;
+        $userID = $this->getUser()->getId();
+
+        $articleId = $article->getUserID()->getId();
+
+        if($articleId == $userID){
+            $manager->remove($article);
+            $manager->flush();
+            return $this->redirect($this->generateUrl('myUserpage'));
+        } else{
+            return $this->render('userpage/debug.html.twig', []);
+        }
     }
 }

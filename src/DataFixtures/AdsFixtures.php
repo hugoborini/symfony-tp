@@ -2,21 +2,23 @@
 
 namespace App\DataFixtures;
 
-use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Persistence\ObjectManager;
 use App\Entity\Ads;
-use App\Entity\UserProfile;
 use App\Entity\Comment;
 use App\Entity\Category;
-use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
-use Symfony\Component\Filesystem\Filesystem;
+use App\Entity\UserProfile;
 use Symfony\Component\Filesystem\Path;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+
 
 class AdsFixtures extends Fixture
 {
+
     public function load(ObjectManager $manager): void
     {
-        $roles = ["user", "admins"];
+        $roles = ["ROLE_USER", "ROLE_ADMIN"];
 
         $tags = ["Vacances", "Emploi", "Véhicules", "Immobilier", "Mode", "Maison", "Multimédia", "Loisirs", "Animaux", "Matériel Professionnel",
         "Services",
@@ -42,9 +44,11 @@ class AdsFixtures extends Fixture
 
             $user->setUsername($faker->name())
                  ->setEmail($faker->email())
-                 ->setPassword(md5("test"))
+                 ->setPassword("test")
                  ->setRole($roles[array_rand($roles)])
                  ->setVote($faker->numberBetween(0, 5));
+
+
 
             $manager->persist($user);
 
@@ -74,7 +78,8 @@ class AdsFixtures extends Fixture
 
                 $comment->setText($faker->text())
                         ->setDate($faker->dateTimeBetween('-4 week', '+1 week'))
-                        ->setUserId($user);
+                        ->setUserId($user)
+                        ->setAdsID($ads);
 
                 $manager->persist($comment);
             }

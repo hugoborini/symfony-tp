@@ -2,15 +2,18 @@
 
 namespace App\Entity;
 
-use App\Repository\UserProfileRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserProfileRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * @ORM\Entity(repositoryClass=UserProfileRepository::class)
  */
-class UserProfile
+class UserProfile implements UserInterface
 {
     /**
      * @ORM\Id
@@ -60,6 +63,10 @@ class UserProfile
         $this->commentId = new ArrayCollection();
     }
 
+    public function eraseCredentials() {}
+    public function getSalt(){}
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +111,11 @@ class UserProfile
     public function getRole(): ?string
     {
         return $this->role;
+    }
+
+
+    public function getRoles(){
+        return [$this->getRole()];
     }
 
     public function setRole(string $role): self

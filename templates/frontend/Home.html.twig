@@ -3,6 +3,13 @@
     Accueil Extranet
 {% endblock %}
 {% block body%}
+<div class="center">
+    <div class="grid">
+        {% for category in categorys %}
+            <a href="{{path("home_filtered", {"categoryID" : category.id})}}"><button type="button" class="btn btn-outline-info">{{category.CategoryName}}</button></a>
+        {% endfor %}
+    </div>
+</div>
 
 <div class="container_ads">
     {% for ad in ads %}

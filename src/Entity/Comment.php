@@ -34,6 +34,12 @@ class Comment
      */
     private $userId;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Ads::class, inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $adsID;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -101,6 +107,13 @@ class Comment
                 $adsId->setUserID(null);
             }
         }
+
+        return $this;
+    }
+
+    public function setAdsID(?Ads $adsID): self
+    {
+        $this->adsID = $adsID;
 
         return $this;
     }

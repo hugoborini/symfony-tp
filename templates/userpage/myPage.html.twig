@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SecurityController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Username : {{userInfo.username}}</h1>
+        <div class="grid">
+            tout vos article :
+
+            {% for article in articles %}
+
+            		<div class="card border-secondary mb-3" style="max-width: 20rem;">
+					<div class="card-header">{{article.title}}</div>
+
+					<div class="card-body">
+						<p class="card-text">{{article.description|length > 20 ? article.description|slice(0, 20) ~ '...' : article.description }}</p>
+						<p class="card-text"> prix : {{article.price}} $</p>
+						<a href="{{path('ad', {'id_ad' : article.id})}}" class="card-link">voir l'annonce</a>
+					</div>
+
+					<div class="card-header">tag : {{article.CategoryID.CategoryName}}</div>
+                    <a href="{{path('deleteArticle', {idArticle: article.id})}}"><button class="btn btn-danger">Suprrimer</button></a>
+				</div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

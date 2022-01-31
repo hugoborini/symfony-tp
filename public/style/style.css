@@ -5,12 +5,29 @@
     justify-content: center;
 }
 
+.container_form{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container_form form{
+    margin-bottom: 100px;
+}
+
 .container img{
     width: 400px;
     height: auto;
     margin: auto;
 }
-
+.center{
+	max-width: 90vw;
+    margin: auto;
+    margin-top: 20px;
+}
 .grid{
     display: grid;
 	grid-template-columns: repeat( auto-fit, minmax(300px, 1fr) );
@@ -23,4 +40,16 @@
     flex-direction: column;
     justify-content: center;
     padding:5% 20%;
+}
+
+.center-center{
+    width: 100vw;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-center{
+    margin: auto;
 }

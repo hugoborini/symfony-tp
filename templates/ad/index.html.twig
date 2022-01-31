@@ -15,5 +15,35 @@
 
         <p>prix : {{ad.price}} $</p>
         <button class="btn btn-lg btn-primary" type="button">acheter</button>
+
+        <h4 class="mt-5">Commentaires : </h4>
+
+        {% for comment in comments %}
+            <div class="">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{comment.UserId.username}}</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p>{{comment.text}}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <p>{{comment.date | date('d/m/Y')}}
+                            à
+                            {{comment.date | date('H:i')}}
+                        </p>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="form-center">
+            {{form_start(form)}}
+            {{form_row(form.text, {'attr' : {"placeholder" : "votre commentaire"}})}}
+            <button type="submit" class="btn btn-info">post ton commentaire</button>
+            {{form_end(form)}}
+        </div>
     </div>
 {% endblock %}
