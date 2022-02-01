@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminpanelController!{% endblock %}
+
+{% block body %}
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">userName</th>
+                    <th scope="col">email</th>
+                    <th scope="col">arcticle</th>
+                    <th scope="col">comment</th>
+                    <th scope="col">role</th>
+                    <th scope="col">supUser</th>
+                </tr>
+            </thead>
+    {% for user in users %}
+            <tbody>
+                <tr class="table-dark">
+                    <th scope="row">{{user.userName}}</th>
+                    <td>{{user.email}}</td>
+                    <td><a href="{{path("adminpanel_ArticleByUser", {id_user: user.id})}}">see articles</a></td>
+                    <td><a href="{{path("adminpanel_CommentByUser", {id_user: user.id})}}">see his comment</a></td>
+
+                    <td>{{user.role}}</td>
+                    <td><a href="{{path("adminpanel_SupUser", {id_user: user.id})}}"><button class="btn btn-danger"> supprimer le user</button></a></td>
+                </tr>
+    {% endfor %}
+            </tbody>
+        </table>
+{% endblock %}

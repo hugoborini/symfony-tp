@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SecurityController!{% endblock %}
+
+{% block body %}
+
+{% for comment in comments %}
+    <div class="card border-secondary mb-3" style="max-width: 20rem;">
+            <div class="card-header">autheur : {{comment.UserId.username}}</div>
+
+            <div class="card-body">
+                <p class="card-text">{{comment.text}}</p>
+            </div>
+                <p> poster le : {{comment.date | date('d/m/Y')}}
+                    à
+                    {{comment.date | date('H:i')}}
+                </p>
+                <a href="{{path("adminpanel_SupComment", {id_comment: comment.id, user_id_view : id_user})}}"><button class="btn btn-danger">Suprrimer</button></a>
+        </div>
+{% endfor %}
+
+{% endblock %}

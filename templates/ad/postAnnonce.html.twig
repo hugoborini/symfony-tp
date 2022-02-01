@@ -3,5 +3,22 @@
 {% block title %}Hello SecurityController!{% endblock %}
 
 {% block body %}
+ <div class="container_form">
+        <h1>post ton bail</h1>
+        {{form_start(form)}}
+            {{form_row(form.title, {'attr' : {"placeholder" : "title"}})}}
+            {{form_row(form.description, {'attr' : {"placeholder" : "description"}})}}
+            {{form_row(form.price, {'attr' : {"placeholder" : "prix"}})}}
+            {{form_row(form.image)}}
+            <select name="category" id="">
+                {% for category in categorys %}
+                    <option value="{{category.id}}">{{category.categoryName}}</option>
+                {% endfor %}
+            </select>
+
+
+            <button type="submit" class="btn btn-info">post ton annonce</button>
+        {{form_end(form)}}
+</div>
 
 {% endblock %}

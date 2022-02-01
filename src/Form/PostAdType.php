@@ -6,19 +6,18 @@ use App\Entity\Ads;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class PostAdType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
         $builder
             ->add('title')
             ->add('description')
             ->add('price')
-            ->add('date')
-            ->add('image')
-            ->add('userID')
-            ->add('categoryID')
+            ->add('image', FileType::class)
         ;
     }
 

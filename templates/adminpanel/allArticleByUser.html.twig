@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article{% endblock %}
+
+{% block body %}
+    {% for article in articles %}
+        <div class="card border-secondary mb-3" style="max-width: 20rem;">
+            <div class="card-header">{{article.title}}</div>
+
+            <div class="card-body">
+                <p class="card-text">{{article.description|length > 20 ? article.description|slice(0, 20) ~ '...' : article.description }}</p>
+                <p class="card-text"> prix : {{article.price}} $</p>
+                <a href="{{path('ad', {'id_ad' : article.id})}}" class="card-link">voir l'annonce</a>
+            </div>
+
+                <div class="card-header">tag : {{article.CategoryID.CategoryName}}</div>
+                <a href="{{path('deleteArticle', {idArticle: article.id, 'userIdRemeber' : id_user})}}"><button class="btn btn-danger">Suprrimer</button></a>
+        </div>
+    {% endfor %}
+{% endblock %}

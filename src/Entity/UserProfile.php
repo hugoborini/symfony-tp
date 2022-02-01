@@ -48,7 +48,7 @@ class UserProfile implements UserInterface
     private $vote;
 
     /**
-     * @ORM\OneToMany(targetEntity=Ads::class, mappedBy="userID")
+     * @ORM\OneToMany(targetEntity=Ads::class, mappedBy="userID", cascade={"remove"})
      */
     private $adsId;
 

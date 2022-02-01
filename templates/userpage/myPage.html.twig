@@ -20,7 +20,7 @@
 					</div>
 
 					<div class="card-header">tag : {{article.CategoryID.CategoryName}}</div>
-                    <a href="{{path('deleteArticle', {idArticle: article.id})}}"><button class="btn btn-danger">Suprrimer</button></a>
+                    <a href="{{path('deleteArticle', {idArticle: article.id, userIdRemeber: 1})}}"><button class="btn btn-danger">Suprrimer</button></a>
 				</div>
             {% endfor %}
         </div>

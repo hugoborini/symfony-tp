@@ -47,9 +47,9 @@ class UserpageController extends AbstractController
     }
 
     /**
-     * @Route("/myPage/deleteArticle/{idArticle}", name="deleteArticle")
+     * @Route("/myPage/deleteArticle/{idArticle}/{userIdRemeber}", name="deleteArticle")
     */
-    public function deleteArticle(int $idArticle): Response
+    public function deleteArticle(int $idArticle, int $userIdRemeber): Response
     {
         $repo = $this->getDoctrine()->getRepository(Ads::class);
         $manager = $this->getDoctrine()->getManager();
@@ -64,7 +64,12 @@ class UserpageController extends AbstractController
             $manager->remove($article);
             $manager->flush();
             return $this->redirect($this->generateUrl('myUserpage'));
-        } else{
+        }elseif($this->getUser()->getRole() === "ROLE_ADMIN"){
+            $manager->remove($article);
+            $manager->flush();
+            return $this->redirect($this->generateUrl('adminpanel_ArticleByUser',["id_user" => $userIdRemeber]));
+        }
+        else{
             return $this->render('userpage/debug.html.twig', []);
         }
     }
