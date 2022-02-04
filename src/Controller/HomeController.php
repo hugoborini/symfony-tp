@@ -15,13 +15,12 @@ class HomeController extends AbstractController
      */
     public function index(): Response
     {
+        $adsClass = new Ads();
         $adsRepo = $this->getDoctrine()->getRepository(Ads::class);
         $categoryRepo = $this->getDoctrine()->getRepository(Category::class);
-
         $ads = $adsRepo->findAll();
 
         $category = $categoryRepo->findAll();
-
 
 
         return $this->render("frontend/Home.html.twig",[

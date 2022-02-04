@@ -11,10 +11,17 @@ use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
 class AdsFixtures extends Fixture
 {
+    private $hasher;
+
+    public function __construct(UserPasswordHasherInterface $hasher)
+    {
+        $this->hasher = $hasher;
+    }
 
     public function load(ObjectManager $manager): void
     {
@@ -41,10 +48,11 @@ class AdsFixtures extends Fixture
 
         for ($i = 0 ; $i < 4; $i++){
             $user = new UserProfile();
-
             $user->setUsername($faker->name())
-                 ->setEmail($faker->email())
-                 ->setPassword("test")
+                 ->setEmail($faker->email());
+            $password = $this->hasher->hashPassword($user, 'test');
+            $user
+                 ->setPassword($password)
                  ->setRole($roles[array_rand($roles)])
                  ->setVote($faker->numberBetween(0, 5));
 

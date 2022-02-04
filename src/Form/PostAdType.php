@@ -17,7 +17,11 @@ class PostAdType extends AbstractType
             ->add('title')
             ->add('description')
             ->add('price')
-            ->add('image', FileType::class)
+            ->add('image', FileType::class,[
+                'multiple' => true,
+                'mapped' => false,
+                'required' => true
+            ])
         ;
     }
 

@@ -86,16 +86,15 @@ class AdController extends AbstractController
         $data = $request->request->all();
 
 
-        //dump($request);
         if($form->isSubmitted() && $form->isValid()){
-            $brochureFile = $form->get('image')->getData();
+            //$brochureFile = $form->get('image')->getData();
             $categoryId = $categoryRepo->find($data["category"]);
             $ads
-                   ->setDate(new \DateTime())
-                   ->setUserId($this->getUser())
-                   ->setImage("oui")
-                   ->setCategoryID($categoryId)
-             ;
+            ->setDate(new \DateTime())
+            ->setUserId($this->getUser())
+            ->setImage("oui")
+            ->setCategoryID($categoryId)
+            ;
 
             $manager->persist($ads);
             $manager->flush();
@@ -106,27 +105,13 @@ class AdController extends AbstractController
             $manager->persist($ads);
             $manager->flush();
 
-            if ($brochureFile) {
-                $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$brochureFile->guessExtension();
+            $images = $form->get('image')->getData();
 
-                // Move the file to the directory where brochures are stored
-                try {
-                    $brochureFile->move(
-                        $this->getParameter('brochures_directory'),
-                        "39/" . $newFilename
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                }
-
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
+            foreach($images as $image){
+                $fichier = md5(uniqid()).'.'.$image->guessExtension();
+                $image->move("image/" . $ads->getID(), $fichier);
 
             }
-
 
         }
 
